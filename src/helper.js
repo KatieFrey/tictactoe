@@ -1,4 +1,9 @@
+
+// calculateWinner receives an array of the tictacoe scorecard
+// calculateWinner runs every time a player makes a move
+
 export function calculateWinner(squares) {
+  // combinations of indices that equal a win
   const lines = [
     [0, 1, 2],
     [3, 4, 5],

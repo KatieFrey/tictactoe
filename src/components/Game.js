@@ -13,28 +13,29 @@ const Game = () => {
     const historyPoint = history.slice(0, stepNumber + 1);
     const current = historyPoint[stepNumber];
     const squares = [...current];
-    //return if won or occupied
+    // return if won or if someone clicks on a square that's occupied
     if (winner || squares[i]) return;
-    //select square
+    // fill square
     squares[i] = x0;
     setHistory([...historyPoint, squares]);
     setStepNumber(historyPoint.length);
     setXisNext(!xIsNext);
   }
 
-  const jumpTo = (step) => {
+  const jumpTo = (step, destination) => {
+    if(destination === "Go to Start"){
+      setHistory([Array(9).fill(null)]);
+    }
     setStepNumber(step);
     setXisNext(step % 2 === 0);
   };
 
   const renderMoves = () => {
-    //console.log("history: ", history);
-    history.map((_step, move) => {
+    return history.map((_step, move) => {
       const destination = move ? `Go to move #${move}` : "Go to Start";
-      //console.log("destination: ", destination)
       return (
         <li key={move}>
-          <button onClick={() => jumpTo(move)}>{destination}</button>
+          <button onClick={() => jumpTo(move,destination)}>{destination}</button>
         </li>
       );
     });
@@ -49,7 +50,9 @@ const Game = () => {
           <h3>History</h3>
           {renderMoves()}
         </div>
-        <h3>{winner ? "Winner: " + winner : "Next Player: " + x0}</h3>
+        <div>
+          <h3>{winner ? "Winner: " + winner : "Next Player: " + x0}</h3>
+        </div>
       </div>
     </>
   )
